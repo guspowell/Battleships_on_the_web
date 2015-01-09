@@ -10,70 +10,29 @@ class BattleShips < Sinatra::Base
 
   enable :sessions
 
+  game = Game.new
+
   get '/' do
-    session[:game] = Game.new
     erb :index
   end
 
-  get'/new_game' do
-    @visitor = params[:name]
-    @game = session[:game]
-    if @visitor and @visitor != ""
-      player1 = Player.new
-      player1.name = params[:name]
-      player1.board = Board.new(Cell)
-      session[:game].add_player(player1)
-    end
+  get '/new_game' do
+    puts game.inspect
+    @player = session[:me]
+    puts session.inspect
     erb :new_game
   end
 
-  get '/placing_player1_ships' do
-      erb :placing_player1_ships
+  post '/new_game' do
+    puts params.inspect
+    name = params[:name]
+    player = Player.new
+    player.name = params[:name]
+    player.board = Board.new(Cell)
+    game.add_player(player)
+    puts game.inspect
   end
 
-  post '/placing_player1_ships' do
-    @game = session[:game]
-    
-    @coord_ac = params[:coord_ac].to_sym
-    @coord_bs = params[:coord_bs].to_sym
-    @coord_d = params[:coord_d].to_sym
-    @coord_s = params[:coord_s].to_sym
-    @coord_pb = params[:coord_pb].to_sym
-
-    @orientation_ac = params[:orientation_ac].to_sym
-    @orientation_bs = params[:orientation_bs].to_sym
-    @orientation_d = params[:orientation_d].to_sym
-    @orientation_s = params[:orientation_s].to_sym
-    @orientation_pb = params[:orientation_pb].to_sym
-
-
-    @placed_ac = session[:game].player1.board.place(Ship.aircraft_carrier, @coord_ac, @orientation_ac)
-    @placed_bs = session[:game].player1.board.place(Ship.battleship, @coord_bs, @orientation_bs)
-    @placed_d = session[:game].player1.board.place(Ship.destroyer, @coord_d, @orientation_d)
-    @placed_s = session[:game].player1.board.place(Ship.submarine, @coord_s, @orientation_s)
-    @placed_pb = session[:game].player1.board.place(Ship.patrol_boat, @coord_pb, @orientation_pb)
-    session[:game] = @placed_ac  #saving ac position to the session
-    session[:game] = @placed_bs
-    session[:game] = @placed_d
-    session[:game] = @placed_s
-    session[:game] = @placed_pb
-    redirect '/placing_player1_ships'
-  end
-
-  get '/placing_player2_ships' do
-    @coord = params[:coord]
-    erb :placing_player2_ships
-  end
-
-  get '/player1_fire' do
-    @coord = params[:coord]
-    erb :player1_fire
-  end
-
-  get '/player2_fire' do
-    @coord = params[:coord]
-    erb :player2_fire
-  end
 
   # start the server if ruby file executed directly
   run! if app_file == $0
