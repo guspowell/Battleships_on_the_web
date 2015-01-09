@@ -57,7 +57,6 @@ class BattleShips < Sinatra::Base
     session[:game] = @placed_d
     session[:game] = @placed_s
     session[:game] = @placed_pb
-    puts @game.inspect
     redirect '/placing_player1_ships'
   end
 
