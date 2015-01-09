@@ -268,22 +268,34 @@ Given(/^I am ready to start the game$/) do
   click_link "Place Ships"
 end
 
-When(/^I input coordinates A(\d+) and click vertical$/) do |arg1|
-  fill_in "coord", :with => "A1"
-  click_button "vertical"
+When(/^I input coordinates A(\d+) and select Horizontally for aircraft carrier$/) do |arg1|
+  fill_in "coord_ac", :with => "A1"
+  select "Horizontally", :from => "orientation_ac"
 end
 
-Given(/^player (\d+) has placed their ships$/) do |arg1|
-  step "I am ready to start the game"
-  fill_in "coord", :with => "A1"
-  click_button "vertical"
-  click_link "Place player 2 ships"
+When(/^I input coordinates B(\d+) and select Horizontally for battleship$/) do |arg1|
+  fill_in "coord_bs", :with => "B1"
+  select "Horizontally", :from => "orientation_bs"end
+
+When(/^I input coordinates C(\d+) and select Horizontally for destroyer$/) do |arg1|
+  fill_in "coord_d", :with => "C1"
+  select "Horizontally", :from => "orientation_d"
 end
 
-When(/^I input coordinates B(\d+) and click vertical$/) do |arg1|
-   fill_in "coord", :with => "A1"
-    click_button "vertical"
+When(/^I input coordinates D(\d+) and select Horizontally for submarine$/) do |arg1|
+  fill_in "coord_s", :with => "D1"
+  select "Horizontally", :from => "orientation_s"
 end
+
+When(/^I input coordinates E(\d+) and select Horizontally for patrol boat$/) do |arg1|
+  fill_in "coord_pb", :with => "E1"
+  select "Horizontally", :from => "orientation_pb"
+end
+
+When(/^I click "(.*?)"$/) do |arg1|
+  click_button "submit"
+end
+
 
 
 
