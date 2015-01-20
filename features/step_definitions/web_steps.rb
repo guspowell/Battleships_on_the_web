@@ -221,7 +221,6 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
 end
 
 Then /^show me the page$/ do
-  save_and_open_page
 end
 
 
@@ -250,8 +249,10 @@ end
 Given(/^player (\d+) has registered$/) do |arg1|
   visit "/"
   click_link "New Game"
+  expect(page).to have_content("What's your name")
+  save_and_open_page
   fill_in "name", :with => "James"
-  click_button "submit"
+  click_button "submit"   #error occurs here!!
 end
 
 When(/^I input Tom$/) do
@@ -275,7 +276,8 @@ end
 
 When(/^I input coordinates B(\d+) and select Horizontally for battleship$/) do |arg1|
   fill_in "coord_bs", :with => "B1"
-  select "Horizontally", :from => "orientation_bs"end
+  select "Horizontally", :from => "orientation_bs"
+end
 
 When(/^I input coordinates C(\d+) and select Horizontally for destroyer$/) do |arg1|
   fill_in "coord_d", :with => "C1"

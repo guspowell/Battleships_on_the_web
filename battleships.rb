@@ -17,20 +17,16 @@ class BattleShips < Sinatra::Base
   end
 
   get '/new_game' do
-    puts game.inspect
     @player = session[:me]
-    puts session.inspect
     erb :new_game
   end
 
   post '/new_game' do
-    puts params.inspect
     name = params[:name]
     player = Player.new
     player.name = params[:name]
     player.board = Board.new(Cell)
     game.add_player(player)
-    puts game.inspect
   end
 
 
