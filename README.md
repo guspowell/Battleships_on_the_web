@@ -8,7 +8,8 @@ In week 4 at Makers Academy we began looking at web applications for the first t
 ## Technologies Used
 
 - Ruby
-- LANGUAGE_TWO
+- HTML
+- CSS
 - Sinatra
 - Cucumber & RSpec
 
